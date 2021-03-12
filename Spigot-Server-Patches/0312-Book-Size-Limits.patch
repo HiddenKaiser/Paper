@@ -43,6 +43,7 @@ index a448773cc46889df37d563beb227beaa433d726e..188af7af384ca35f2e659dfb1f7518dd
 +            NBTTagList pageList = testStack.getTag().getList("pages", 8);
 +            if (pageList.size() > 100) {
 +                PlayerConnection.LOGGER.warn(this.player.getName() + " tried to send a book with too many pages");
++                // minecraftServer.scheduleOnMain(() -> this.disconnect("Book too large!"));
 +                return;
 +            }
 +            long byteTotal = 0;
@@ -54,6 +55,7 @@ index a448773cc46889df37d563beb227beaa433d726e..188af7af384ca35f2e659dfb1f7518dd
 +                int byteLength = testString.getBytes(java.nio.charset.StandardCharsets.UTF_8).length;
 +                if (byteLength > 256 * 4) {
 +                    PlayerConnection.LOGGER.warn(this.player.getName() + " tried to send a book with with a page too large!");
++                    // minecraftServer.scheduleOnMain(() -> this.disconnect("Book too large!"));
 +                    return;
 +                }
 +                byteTotal += byteLength;
@@ -76,6 +78,7 @@ index a448773cc46889df37d563beb227beaa433d726e..188af7af384ca35f2e659dfb1f7518dd
 +
 +            if (byteTotal > byteAllowed) {
 +                PlayerConnection.LOGGER.warn(this.player.getName() + " tried to send too large of a book. Book Size: " + byteTotal + " - Allowed:  "+ byteAllowed + " - Pages: " + pageList.size());
++                // minecraftServer.scheduleOnMain(() -> this.disconnect("Book too large!"));
 +                return;
 +            }
 +        }
